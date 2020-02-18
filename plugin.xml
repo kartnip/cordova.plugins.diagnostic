@@ -5,10 +5,10 @@
     version="3.7.2">
 
     <name>Diagnostic</name>
-    <description>Cordova/Phonegap plugin to check the state of Location/WiFi/Camera/Bluetooth device settings.</description>
+    <description>Cordova/Phonegap plugin to check the state of Location/WiFi/Camera.</description>
     <author>Dave Alden</author>
     <license>MIT</license>
-    <keywords>ecosystem:cordova,cordova,phonegap,android,ios,windows,diagnostic,wifi,location,gps,camera,bluetooth,settings</keywords>
+    <keywords>ecosystem:cordova,cordova,phonegap,android,ios,windows,diagnostic,wifi,location,gps,camera,settings</keywords>
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
@@ -47,10 +47,6 @@
             <string>This app requires photo library access to function properly.</string>
         </config-file>
 
-        <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
-            <string>This app requires bluetooth access to function properly.</string>
-        </config-file>
-
         <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
             <string>This app requires microphone access to function properly.</string>
         </config-file>
@@ -79,7 +75,6 @@
         <source-file src="src/ios/Diagnostic.m" />
 
         <framework src="CoreLocation.framework" />
-        <framework src="CoreBluetooth.framework" />
         <framework src="CoreMotion.framework" />
         <framework src="AVFoundation.framework" />
         <framework src="Photos.framework" />
