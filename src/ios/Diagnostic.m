@@ -1074,5 +1074,8 @@ ABAddressBookRef _addressBook;
 #pragma mark - CBCentralManagerDelegate
 /********************************/
 
+- (void) centralManagerDidUpdateState:(CBCentralManager *)central {
+
+}
 
 @end
