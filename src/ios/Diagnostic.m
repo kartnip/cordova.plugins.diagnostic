@@ -1070,12 +1070,4 @@ ABAddressBookRef _addressBook;
 }
 #endif
 
-/********************************/
-#pragma mark - CBCentralManagerDelegate
-/********************************/
-
-- (void) centralManagerDidUpdateState:(CBCentralManager *)central {
-
-}
-
 @end
