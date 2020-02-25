@@ -10,7 +10,6 @@
 #import <Cordova/CDVPlugin.h>
 #import <WebKit/WebKit.h>
 
-#import <CoreBluetooth/CoreBluetooth.h>
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
 #import <EventKit/EventKit.h>
@@ -29,7 +28,6 @@
 
 @interface Diagnostic : CDVPlugin <CBCentralManagerDelegate, CLLocationManagerDelegate>
 
-    @property (nonatomic, retain) CBCentralManager* bluetoothManager;
     @property (strong, nonatomic) CLLocationManager* locationManager;
     @property (strong, nonatomic) CMMotionActivityManager* motionManager;
     @property (strong, nonatomic) NSOperationQueue* motionActivityQueue;
@@ -53,10 +51,6 @@
 
 - (void) isWifiAvailable: (CDVInvokedUrlCommand*)command;
 - (void) isWifiEnabled: (CDVInvokedUrlCommand*)command;
-
-- (void) isBluetoothAvailable: (CDVInvokedUrlCommand*)command;
-- (void) getBluetoothState: (CDVInvokedUrlCommand*)command;
-- (void) requestBluetoothAuthorization: (CDVInvokedUrlCommand*)command;
 
 - (void) isRemoteNotificationsEnabled: (CDVInvokedUrlCommand*)command;
 - (void) getRemoteNotificationTypes: (CDVInvokedUrlCommand*)command;
