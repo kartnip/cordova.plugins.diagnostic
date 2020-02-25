@@ -26,13 +26,6 @@ var Diagnostic = (function(){
      *
      ********************/
 
-    // Placeholder listeners
-    Diagnostic._onBluetoothStateChange =
-        Diagnostic._onLocationStateChange =
-            Diagnostic._onNFCStateChange =
-                Diagnostic._onPermissionRequestComplete = function(){};
-
-
     /**
      * "Dangerous" permissions that need to be requested at run-time (Android 6.0/API 23 and above)
      * See http://developer.android.com/guide/topics/security/permissions.html#perm-groups
@@ -103,14 +96,6 @@ var Diagnostic = (function(){
 
 
     Diagnostic.firstRequestedPermissions;
-
-    Diagnostic.bluetoothState = {
-        "UNKNOWN": "unknown",
-        "POWERED_OFF": "powered_off",
-        "POWERED_ON": "powered_on",
-        "POWERING_OFF": "powering_off",
-        "POWERING_ON": "powering_on"
-    };
 
     Diagnostic.NFCState = {
         "UNKNOWN": "unknown",
@@ -703,7 +688,7 @@ var Diagnostic = (function(){
 
     /**
      * Switches to the wireless settings page in the Settings app.
-     * Allows configuration of wireless controls such as Wi-Fi, Bluetooth and Mobile networks.
+     * Allows configuration of wireless controls such as Wi-Fi, and Mobile networks.
      */
     Diagnostic.switchToWirelessSettings = function() {
         return cordova.exec(null,
@@ -917,174 +902,6 @@ var Diagnostic = (function(){
             'getExternalSdCardDetails',
             []);
     };
-
-
-    /***************
-     * Bluetooth   *
-     ***************/
-
-    /**
-     * Checks if Bluetooth is available to the app.
-     * Returns true if the device has Bluetooth capabilities and if so that Bluetooth is switched on
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if Bluetooth is available.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.isBluetoothAvailable = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'isBluetoothAvailable',
-            []);
-    };
-
-    /**
-     * Checks if the device setting for Bluetooth is switched on.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if Bluetooth is switched on.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.isBluetoothEnabled = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'isBluetoothEnabled',
-            []);
-    };
-
-    /**
-     * Enables/disables Bluetooth on the device.
-     *
-     * @param {Function} successCallback - function to call on successful setting of Bluetooth state
-     * @param {Function} errorCallback - function to call on failure to set Bluetooth state.
-     * This callback function is passed a single string parameter containing the error message.
-     * @param {Boolean} state - Bluetooth state to set: TRUE for enabled, FALSE for disabled.
-     */
-    Diagnostic.setBluetoothState = function(successCallback, errorCallback, state) {
-        return cordova.exec(successCallback,
-            errorCallback,
-            'Diagnostic',
-            'setBluetoothState',
-            [state]);
-    };
-
-    /**
-     * Returns current state of Bluetooth hardware on the device.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single string parameter defined as a constant in `cordova.plugins.diagnostic.bluetoothState`.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.getBluetoothState = function(successCallback, errorCallback) {
-        return cordova.exec(successCallback,
-            errorCallback,
-            'Diagnostic',
-            'getBluetoothState',
-            []);
-    };
-
-    /**
-     * Registers a listener function to call when the state of Bluetooth hardware changes.
-     * Pass in a falsey value to de-register the currently registered function.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the state of Bluetooth hardware changes.
-     * This callback function is passed a single string parameter defined as a constant in `cordova.plugins.diagnostic.bluetoothState`.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.registerBluetoothStateChangeHandler = function(successCallback, errorCallback) {
-        cordova.exec(
-            function(){
-                Diagnostic._onBluetoothStateChange = successCallback || function(){};
-            },
-            errorCallback,
-            'Diagnostic',
-            'initializeBluetoothListener',
-            []
-        );
-    };
-
-
-    /**
-     * Checks if the device has Bluetooth capabilities.
-     * See http://developer.android.com/guide/topics/connectivity/bluetooth.html.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if device has Bluetooth capabilities.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.hasBluetoothSupport = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'hasBluetoothSupport', []);
-    };
-
-    /**
-     * Checks if the device has Bluetooth Low Energy (LE) capabilities.
-     * See http://developer.android.com/guide/topics/connectivity/bluetooth-le.html.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if device has Bluetooth LE capabilities.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.hasBluetoothLESupport = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'hasBluetoothLESupport', []);
-    };
-
-    /**
-     * Checks if the device has Bluetooth Low Energy (LE) capabilities.
-     * See http://developer.android.com/guide/topics/connectivity/bluetooth-le.html.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if device has Bluetooth LE capabilities.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.hasBluetoothLESupport = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'hasBluetoothLESupport', []);
-    };
-
-    /**
-     * Checks if the device has Bluetooth Low Energy (LE) peripheral capabilities.
-     * See http://developer.android.com/guide/topics/connectivity/bluetooth-le.html#roles.
-     *
-     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
-     * This callback function is passed a single boolean parameter which is TRUE if device has Bluetooth LE peripheral capabilities.
-     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
-     *  This callback function is passed a single string parameter containing the error message.
-     */
-    Diagnostic.hasBluetoothLEPeripheralSupport = function(successCallback, errorCallback) {
-        return cordova.exec(ensureBoolean(successCallback),
-            errorCallback,
-            'Diagnostic',
-            'hasBluetoothLEPeripheralSupport', []);
-    };
-
-    /**
-     * Switches to the Bluetooth page in the Settings app
-     */
-    Diagnostic.switchToBluetoothSettings = function() {
-        return cordova.exec(null,
-            null,
-            'Diagnostic',
-            'switchToBluetoothSettings',
-            []);
-    };
-
 
     /*************
      * Mobile Data
