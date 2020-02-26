@@ -57,7 +57,6 @@
 - (void) isRegisteredForRemoteNotifications: (CDVInvokedUrlCommand*)command;
 
 - (void) switchToSettings: (CDVInvokedUrlCommand*)command;
-- (void) switchToLocationSettings: (CDVInvokedUrlCommand*)command;
 
 - (void) isMicrophoneAuthorized: (CDVInvokedUrlCommand*)command;
 - (void) getMicrophoneAuthorizationStatus: (CDVInvokedUrlCommand*)command;
